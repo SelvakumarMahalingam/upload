@@ -1,0 +1,21 @@
+<div *ngIf="true" class="" style="margin-bottom: 0;">
+  <!-- <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">{{item.progress}} %</div> -->
+  <circle-progress
+  [percent]="data.uploader"
+  [maxPercent]="100"
+  [radius]="20"
+  [showTitle]="false"
+  [showUnits]="false"
+  [outerStrokeWidth]="2"
+ 
+  [showInnerStroke]="false"
+  [outerStrokeColor]="'#78C000'"
+ 
+  [animation]="true"
+  [subtitle]="formatSubtitle(data.uploader)"
+  [animationDuration]="500"
+  [subtitleFontSize]="5"
+  [titleFontSize]="10"
+  [subtitleColor]="red"></circle-progress>
+</div>
+

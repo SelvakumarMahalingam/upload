@@ -1,0 +1,35 @@
+mat-icon.success{
+   
+    color: green;
+    margin-left: 20px;
+    font-size: 50px;
+}
+mat-icon.error{
+   
+    color: red;
+    margin-left: 20px;
+    font-size: 50px;
+}
+mat-icon.cancel{
+    color: #f5a063;
+    margin-left: 20px;
+    font-size: 50px;
+}
+mat-icon.successall{
+    color: green;
+    font-size: 150px;
+}
+mat-icon.cancelall{
+    color: #f5a063;
+    font-size: 150px;
+}
+svg {
+    display: block;
+    margin: 50px auto;
+  }
+  
+  #loader 
+  { fill: #0088cc }
+  
+  #border 
+  { fill: #00517a }

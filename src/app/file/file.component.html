@@ -1,0 +1,116 @@
+
+<div class="col-md-3">
+ 
+  <h3>Select files</h3>
+  Multiple
+  <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+
+  Single
+  <input type="file" ng2FileSelect [uploader]="uploader" />
+</div>
+
+<div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader.queue.length >0 ">
+    <div class="row">
+        <div class="col-md-3">
+            <circle-progress  *ngIf="uploader.isUploading"  [percent]="uploader.progress" [maxPercent]="100" [radius]="50"
+                [outerStrokeWidth]="3" [outerStrokeColor]="'#78C000'" [showInnerStroke]="false" [unitsFontSize]="20" [animation]="true"
+                [subtitle]="formatSubtitle(uploader.progress)" [animationDuration]="10" [subtitleFontSize]="10"
+                [titleFontSize]="20" [subtitleColor]="red">
+            </circle-progress>
+           
+            <!-- <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">{{uploader.progress}} %</div> -->
+            <mat-icon class="successall" *ngIf="success">check_circle_outline</mat-icon>
+            <mat-icon class="cancelall" *ngIf="Canceled">warning</mat-icon>
+            <mat-icon class="error" *ngIf="uploader.isError">error_outline</mat-icon>
+        </div>
+        <div class="col-md-9">
+            <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>
+            <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            </button>
+            <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+        </div>
+    
+    </div>
+  <h3>Upload queue</h3>
+  <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+  <table class="table" *ngIf="uploader.queue.length >0 ">
+      <thead>
+      <tr>
+          <th width="50%">Name</th>
+          <th>Size</th>
+          <th>Progress</th>
+          <!-- <th>Status</th> -->
+          <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of uploader.queue">
+          <td><strong>{{ item?.file?.name }}</strong></td>
+          <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+          <td *ngIf="uploader.options.isHTML5">
+                <!-- *ngIf="item.isUploading" -->
+              <div *ngIf="item.isUploading"  class="" style="margin-bottom: 0;">
+                  <!-- <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">{{item.progress}} %</div> -->
+                  <circle-progress 
+                  [percent]="item.progress"
+                  [maxPercent]="100"
+                  [radius]="20"
+                  [showTitle]="false"
+                  [showUnits]="false"
+                  [outerStrokeWidth]="2"
+                 
+                  [showInnerStroke]="false"
+                  [outerStrokeColor]="'#78C000'"
+                 
+                  [animation]="true"
+                  [subtitle]="formatSubtitle1(item.progress)"
+                  [animationDuration]="10"
+                  [subtitleFontSize]="5"
+                  [titleFontSize]="10"
+                  [subtitleColor]="red"></circle-progress>
+                </div>
+               
+                <mat-icon class="success" *ngIf="item.isSuccess">check_circle_outline</mat-icon>
+                <mat-icon class="cancel" *ngIf="item.isCancel">warning</mat-icon>
+                <mat-icon class="error" *ngIf="item.isError">error_outline</mat-icon>
+
+              </td>
+          <!-- <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+          </td> -->
+          <td nowrap>
+              <button type="button" class="btn btn-success btn-xs"
+                      (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                  <span class="glyphicon glyphicon-upload"></span> Upload
+              </button>
+              <button type="button" class="btn btn-warning btn-xs"
+                      (click)="item.cancel()" [disabled]="!item.isUploading">
+                  <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      (click)="item.remove()">
+                  <span class="glyphicon glyphicon-trash"></span> Remove
+              </button>
+          </td>
+      </tr>
+      </tbody>
+  </table>
+
+  <div id="passing"
+     [style.width.%]="uploader.progress"
+     [ngStyle]="{'to': uploader.progress}">
+</div>
+  <button  (click)="openDialog()">Pick one</button>
+ 
+
+</div>
+
+
